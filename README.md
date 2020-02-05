@@ -6,7 +6,7 @@ Input file is in resources directory in this project.
 Reading complete file as String in memory (Not a recommend approach for large file)
 
 # Disadvantages -
-Required large Heap size required
+Required large Heap size
 
 # Advantages -
 Compute time might be faster
