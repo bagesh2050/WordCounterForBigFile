@@ -3,9 +3,12 @@ package com.test.executor;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-import com.test.generic.CustomUtility;
+import com.test.executor.utils.CustomUtility;
 
 public class CustomFileReaderExecutor {
 
@@ -17,6 +20,8 @@ public class CustomFileReaderExecutor {
 
 	public static void main(String[] args) {
 
+		System.out.println("****************** Executor Service Solution ***************\n");
+		
 		StringBuilder fileContent = CustomUtility.fileContentsAsString("resources\\test-book.txt");
 
 		if (fileContent == null || fileContent.length() <= 0) {
@@ -34,29 +39,27 @@ public class CustomFileReaderExecutor {
 		// Do time related calculation
 		LocalTime startTime = LocalTime.now();
 
-		CountDownLatch countDownlatch = new CountDownLatch(partList.size());
+		ExecutorService executor = Executors.newFixedThreadPool(partList.size());
+
+		int totalWordsInFile = 0;
 
 		for (int i = 0; i < partList.size(); i++) {
 			String startPattern = partList.get(i);
 			String endPattern = i < partList.size() - 1 ? partList.get(i + 1) : "";
+			Future<Integer> response = executor
+					.submit(new WordExecutorCounter("Part " + (i + 1), bookParts, startPattern, endPattern));
 
-			Thread thread = new Thread(
-					new WordExecutorCounter("Part " + (i + 1), bookParts, startPattern, endPattern, countDownlatch));
-
-			thread.start();
+			try {
+				totalWordsInFile = totalWordsInFile + response.get();
+			} catch (InterruptedException | ExecutionException e) {
+				System.out.println("Some problem occured");
+			}
 		}
-
-		try {
-			countDownlatch.await();
-		} catch (Exception e) {
-			System.out.println("Some problem Occured");
-		}
+		
+		executor.shutdown();
 
 		LocalTime endTime = LocalTime.now();
 
-		System.out.println("Time taken=" + (endTime.getNano() - startTime.getNano()));
-
-		System.out.println("Total Word Count in file=");
-
+		CustomUtility.printResponse(totalWordsInFile, startTime, endTime);
 	}
 }

@@ -1,27 +1,25 @@
 package com.test.executor;
+
 import java.util.HashMap;
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Callable;
 
-import com.test.generic.CustomUtility;
+import com.test.executor.utils.CustomUtility;
 
-public class WordExecutorCounter implements Runnable {
+public class WordExecutorCounter implements Callable<Integer> {
 	private StringBuilder fileData;
 	private String startPart;
 	private String endPart;
 	private String partName;
-	private CountDownLatch latch;
 
-	public WordExecutorCounter(String partName, StringBuilder bookParts, String startPart, String endPart,
-			CountDownLatch latch) {
+	public WordExecutorCounter(String partName, StringBuilder bookParts, String startPart, String endPart) {
 		this.partName = partName;
 		this.fileData = bookParts;
 		this.startPart = startPart;
 		this.endPart = endPart;
-		this.latch = latch;
 	}
 
 	@Override
-	public void run() {
+	public Integer call() throws Exception {
 		int[] arr = CustomUtility.getSubStringBetween(fileData, startPart, endPart);
 
 		HashMap<String, Integer> firstMap = new HashMap<String, Integer>();
@@ -46,7 +44,6 @@ public class WordExecutorCounter implements Runnable {
 
 		// System.out.println(firstMap);
 		System.out.println("Total Words in " + partName + " = " + totalWords);
-
-		latch.countDown();
+		return totalWords;
 	}
 }
