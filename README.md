@@ -13,19 +13,22 @@ I have solved this problem using three approaches for benchmark testing
 2 - Using Future Tasks with ThreadPoolExecutor
 3 - Using ForkJoin Pool
 
-****************** Thread with CountDown Latch Solution ***************
+****** Thread with CountDown Latch Solution *****
+
 Total Word Count in file=566031
 Time taken In Seconds       => 2
 Time taken In Micro Seconds => 2148000
 Time taken In Nano Seconds  => 2148000000
 
-****************** Executor Service Solution **************
+****** Executor Service Solution **************
+
 Total Word Count in file=566031
 Time taken In Seconds       => 2
 Time taken In Micro Seconds => 2125000
 Time taken In Nano Seconds  => 2125000000
 
-****************** ForkJoin Solution ***************
+********* ForkJoin Solution ***************
+
 Total Word Count in file=566031
 Time taken In Seconds       => 1
 Time taken In Micro Seconds => 1666000
