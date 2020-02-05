@@ -2,6 +2,7 @@ package com.test.forkjoin;
 
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
@@ -16,6 +17,7 @@ public class CustomFileReaderFork {
 			"BOOK THIRTEEN: 1812", "BOOK FOURTEEN: 1812", "BOOK FIFTEEN: 1812 - 13");
 
 	public static void main(String[] args) {
+		LocalTime startTime = LocalTime.now();
 
 		System.out.println("****************** ForkJoin Solution ***************\n");
 
@@ -33,16 +35,19 @@ public class CustomFileReaderFork {
 		StringBuilder AuthorInfo = new StringBuilder(data[0]).append(data[1]);
 		StringBuilder bookParts = new StringBuilder(partList.get(0)).append(" ").append(data[2]);
 
-		// Do time related calculation
-		LocalTime startTime = LocalTime.now();
+		int totalWordsInFile = 0;
+
+		WordForkCounter wordCounterForAuthorInfo = new WordForkCounter(0, "Author Info", AuthorInfo, "", "",
+				Collections.emptyList());
+
+		totalWordsInFile += new ForkJoinPool().invoke(wordCounterForAuthorInfo);
 
 		WordForkCounter wordCounter = new WordForkCounter(0, "Part 1", bookParts, partList.get(0), partList.get(1),
 				partList);
 
-		int totalWordsInFile = new ForkJoinPool().invoke(wordCounter);
+		totalWordsInFile += new ForkJoinPool().invoke(wordCounter);
 
-		LocalTime endTime = LocalTime.now();
-
-		CustomUtility.printResponse(totalWordsInFile, startTime, endTime);
+		// Print Response
+		CustomUtility.printResponse(totalWordsInFile, startTime, LocalTime.now());
 	}
 }

@@ -12,8 +12,10 @@ import java.util.regex.Pattern;
 
 public class CustomUtility {
 	public static int[] getSubStringBetween(StringBuilder fileString, String startPattern, String endPattern) {
+		int[] arr = new int[2];
 
-		StringBuilder regex;
+		StringBuilder regex = null;
+
 		if (startPattern != null && startPattern.length() > 0 && endPattern != null && endPattern.length() > 0) {
 			regex = new StringBuilder(startPattern).append("(.*?)").append(endPattern);
 		} else if (startPattern != null && startPattern.length() > 0) {
@@ -21,19 +23,20 @@ public class CustomUtility {
 		} else if (endPattern != null && endPattern.length() > 0) {
 			regex = new StringBuilder("*.").append(endPattern);
 		} else {
-			regex = new StringBuilder("*.*");
+			arr[0] = 0;
+			arr[1] = fileString.length();
 		}
 
-		Pattern pattern = Pattern.compile(regex.toString());
-		Matcher matcher = pattern.matcher(fileString);
+		if (regex != null) {
+			Pattern pattern = Pattern.compile(regex.toString());
+			Matcher matcher = pattern.matcher(fileString);
 
-		int[] arr = new int[2];
-
-		while (matcher.find()) {
-			arr[0] = matcher.start();
-			arr[1] = matcher.end();
+			while (matcher.find()) {
+				arr[0] = matcher.start();
+				arr[1] = matcher.end();
+			}
 		}
-
+		
 		return arr;
 	}
 

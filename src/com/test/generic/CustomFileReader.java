@@ -15,8 +15,10 @@ public class CustomFileReader {
 			"BOOK FOUR: 1806", "BOOK FIVE: 1806 - 07", "BOOK SIX: 1808 - 10", "BOOK SEVEN: 1810 - 11",
 			"BOOK EIGHT: 1811 - 12", "BOOK NINE: 1812", "BOOK TEN: 1812", "BOOK ELEVEN: 1812", "BOOK TWELVE: 1812",
 			"BOOK THIRTEEN: 1812", "BOOK FOURTEEN: 1812", "BOOK FIFTEEN: 1812 - 13");
+	private final static int AUTHOR_INFO_PART = 1;
 
 	public static void main(String[] args) {
+		LocalTime startTime = LocalTime.now();
 
 		System.out.println("****************** Thread with CountDown Latch Solution ***************\n");
 
@@ -34,11 +36,16 @@ public class CustomFileReader {
 		StringBuilder AuthorInfo = new StringBuilder(data[0]).append(data[1]);
 		StringBuilder bookParts = new StringBuilder(partList.get(0)).append(" ").append(data[2]);
 
-		LocalTime startTime = LocalTime.now();
+		CountDownLatch countDownlatch = new CountDownLatch(partList.size() + AUTHOR_INFO_PART);
 
-		CountDownLatch countDownlatch = new CountDownLatch(partList.size());
+		List<WordCounter> listOfRunnableTasks = new ArrayList<WordCounter>(partList.size() + AUTHOR_INFO_PART);
 
-		List<WordCounter> listOfRunnableTasks = new ArrayList<WordCounter>(partList.size());
+		// Count words in Author Section
+		WordCounter authorInfoWC = new WordCounter("Author Info ", AuthorInfo, "", "", countDownlatch);
+		listOfRunnableTasks.add(authorInfoWC);
+		new Thread(authorInfoWC).start();
+
+		// Creating threads for Part Info
 
 		for (int i = 0; i < partList.size(); i++) {
 			String startPattern = partList.get(i);
@@ -56,12 +63,11 @@ public class CustomFileReader {
 		}
 
 		int totalWordsInFile = 0;
-		for (int i = 0; i < partList.size(); i++) {
+		for (int i = 0; i < partList.size() + AUTHOR_INFO_PART; i++) {
 			totalWordsInFile += listOfRunnableTasks.get(i).getTotalWordsInPart();
 		}
 
-		LocalTime endTime = LocalTime.now();
-
-		CustomUtility.printResponse(totalWordsInFile, startTime, endTime);
+		// Print Response
+		CustomUtility.printResponse(totalWordsInFile, startTime, LocalTime.now());
 	}
 }
