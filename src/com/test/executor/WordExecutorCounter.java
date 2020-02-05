@@ -3,7 +3,7 @@ package com.test.executor;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class WordExecutorCounter implements Callable<Integer> {
 	private StringBuilder fileData;

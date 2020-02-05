@@ -3,7 +3,7 @@ package com.test.generic;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class WordCounter implements Runnable {
 	private int totalWordsInPart;

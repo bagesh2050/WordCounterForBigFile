@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ForkJoinPool;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class CustomFileReaderFork {
 

@@ -1,4 +1,4 @@
-package com.test.executor.utils;
+package com.test.utils;
 
 import java.io.BufferedReader;
 import java.nio.charset.Charset;

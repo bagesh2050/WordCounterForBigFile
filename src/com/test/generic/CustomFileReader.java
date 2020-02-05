@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class CustomFileReader {
 

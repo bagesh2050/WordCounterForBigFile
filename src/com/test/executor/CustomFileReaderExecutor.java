@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class CustomFileReaderExecutor {
 

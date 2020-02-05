@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.RecursiveTask;
 
-import com.test.executor.utils.CustomUtility;
+import com.test.utils.CustomUtility;
 
 public class WordForkCounter extends RecursiveTask<Integer> {
 	private static final long serialVersionUID = 1L;
