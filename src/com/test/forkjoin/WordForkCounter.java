@@ -70,7 +70,7 @@ public class WordForkCounter extends RecursiveTask<Integer> {
 
 		
 		System.out.println("Total Words in " + partName + " = " + totalWords);
-		System.out.println();
+		
 		return totalWords;
 	}
 }

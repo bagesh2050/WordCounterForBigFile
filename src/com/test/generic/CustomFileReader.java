@@ -1,6 +1,7 @@
 package com.test.generic;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -16,9 +17,9 @@ public class CustomFileReader {
 			"BOOK THIRTEEN: 1812", "BOOK FOURTEEN: 1812", "BOOK FIFTEEN: 1812 - 13");
 
 	public static void main(String[] args) {
-		
+
 		System.out.println("****************** Thread with CountDown Latch Solution ***************\n");
-		
+
 		StringBuilder fileContent = CustomUtility.fileContentsAsString("resources\\test-book.txt");
 
 		if (fileContent == null || fileContent.length() <= 0) {
@@ -37,18 +38,15 @@ public class CustomFileReader {
 
 		CountDownLatch countDownlatch = new CountDownLatch(partList.size());
 
+		List<WordCounter> listOfRunnableTasks = new ArrayList<WordCounter>(partList.size());
+
 		for (int i = 0; i < partList.size(); i++) {
+			String startPattern = partList.get(i);
+			String endPattern = i < partList.size() - 1 ? partList.get(i + 1) : "";
 
-			Thread thread;
-
-			if (i + 1 < partList.size()) {
-				thread = new Thread(new WordCounter("Part " + (i + 1), bookParts, partList.get(i), partList.get(i + 1),
-						countDownlatch));
-			} else {
-				thread = new Thread(new WordCounter("Part " + (i + 1), bookParts, partList.get(i), "", countDownlatch));
-			}
-
-			thread.start();
+			WordCounter wc = new WordCounter("Part " + (i + 1), bookParts, startPattern, endPattern, countDownlatch);
+			listOfRunnableTasks.add(wc);
+			new Thread(wc).start();
 		}
 
 		try {
@@ -58,9 +56,12 @@ public class CustomFileReader {
 		}
 
 		int totalWordsInFile = 0;
-		
+		for (int i = 0; i < partList.size(); i++) {
+			totalWordsInFile += listOfRunnableTasks.get(i).getTotalWordsInPart();
+		}
+
 		LocalTime endTime = LocalTime.now();
-		
+
 		CustomUtility.printResponse(totalWordsInFile, startTime, endTime);
 	}
 }

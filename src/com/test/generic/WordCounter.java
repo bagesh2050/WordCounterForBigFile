@@ -1,10 +1,12 @@
 package com.test.generic;
+
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
 import com.test.executor.utils.CustomUtility;
 
 public class WordCounter implements Runnable {
+	private int totalWordsInPart;
 	private StringBuilder fileData;
 	private String startPart;
 	private String endPart;
@@ -46,7 +48,12 @@ public class WordCounter implements Runnable {
 
 		// System.out.println(firstMap);
 		System.out.println("Total Words in " + partName + " = " + totalWords);
+		totalWordsInPart = totalWords;
 
 		latch.countDown();
+	}
+
+	public int getTotalWordsInPart() {
+		return totalWordsInPart;
 	}
 }
