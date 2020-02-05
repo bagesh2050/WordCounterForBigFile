@@ -16,22 +16,31 @@ I have solved this problem using three approaches for benchmark testing
 ****** Thread with CountDown Latch Solution *****
 
 Total Word Count in file=566031
+
 Time taken In Seconds       => 2
+
 Time taken In Micro Seconds => 2148000
+
 Time taken In Nano Seconds  => 2148000000
 
 ****** Executor Service Solution **************
 
 Total Word Count in file=566031
+
 Time taken In Seconds       => 2
+
 Time taken In Micro Seconds => 2125000
+
 Time taken In Nano Seconds  => 2125000000
 
 ********* ForkJoin Solution ***************
 
 Total Word Count in file=566031
+
 Time taken In Seconds       => 1
+
 Time taken In Micro Seconds => 1666000
+
 Time taken In Nano Seconds  => 1666000000
 
 
