@@ -2,10 +2,13 @@
 This is a multi-threaded application reading data from big file and counting words.
 Input file is in resources directory in this project.
 
-Case 1 - Reading complete file as String in memory (Not a recommend approach for large file)
-Disadvantages -
+# Case 1 - 
+Reading complete file as String in memory (Not a recommend approach for large file)
+
+# Disadvantages -
 Required large Heap size required
-Advantages -
+
+# Advantages -
 Compute time might be faster
 
 I have solved this problem using three approaches for benchmark testing 
