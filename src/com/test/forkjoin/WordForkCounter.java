@@ -35,7 +35,7 @@ public class WordForkCounter extends RecursiveTask<Integer> {
 		String startPattern = partList.get(size + 1);
 		String endPattern = size < partList.size() - 2 ? partList.get(size + 2) : "";
 
-		WordForkCounter calculator = new WordForkCounter(size + 1, "Part " + (size + 1), fileData, startPattern,
+		WordForkCounter calculator = new WordForkCounter(size + 1, "Part " + (size + 2), fileData, startPattern,
 				endPattern, partList);
 
 		calculator.fork();
@@ -47,7 +47,7 @@ public class WordForkCounter extends RecursiveTask<Integer> {
 		int[] arr = CustomUtility.getSubStringBetween(fileData, startPart, endPart);
 
 		HashMap<String, Integer> firstMap = new HashMap<String, Integer>();
-		
+
 		PriorityQueue<HashMap<String, Integer>> pQueue = new PriorityQueue<HashMap<String, Integer>>();
 
 		int totalWords = 0;
@@ -68,9 +68,8 @@ public class WordForkCounter extends RecursiveTask<Integer> {
 			}
 		}
 
-		
 		System.out.println("Total Words in " + partName + " = " + totalWords);
-		
+
 		return totalWords;
 	}
 }

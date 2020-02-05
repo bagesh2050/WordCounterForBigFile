@@ -14,10 +14,14 @@ public class CustomUtility {
 	public static int[] getSubStringBetween(StringBuilder fileString, String startPattern, String endPattern) {
 
 		StringBuilder regex;
-		if (endPattern != null && endPattern.length() > 0) {
+		if (startPattern != null && startPattern.length() > 0 && endPattern != null && endPattern.length() > 0) {
 			regex = new StringBuilder(startPattern).append("(.*?)").append(endPattern);
-		} else {
+		} else if (startPattern != null && startPattern.length() > 0) {
 			regex = new StringBuilder(startPattern).append(".*");
+		} else if (endPattern != null && endPattern.length() > 0) {
+			regex = new StringBuilder("*.").append(endPattern);
+		} else {
+			regex = new StringBuilder("*.*");
 		}
 
 		Pattern pattern = Pattern.compile(regex.toString());

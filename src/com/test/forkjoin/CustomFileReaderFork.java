@@ -18,7 +18,7 @@ public class CustomFileReaderFork {
 	public static void main(String[] args) {
 
 		System.out.println("****************** ForkJoin Solution ***************\n");
-		
+
 		StringBuilder fileContent = CustomUtility.fileContentsAsString("resources\\test-book.txt");
 
 		if (fileContent == null || fileContent.length() <= 0) {
@@ -36,7 +36,7 @@ public class CustomFileReaderFork {
 		// Do time related calculation
 		LocalTime startTime = LocalTime.now();
 
-		WordForkCounter wordCounter = new WordForkCounter(0, "Part 0", bookParts, partList.get(0), partList.get(1),
+		WordForkCounter wordCounter = new WordForkCounter(0, "Part 1", bookParts, partList.get(0), partList.get(1),
 				partList);
 
 		int totalWordsInFile = new ForkJoinPool().invoke(wordCounter);
